@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Carts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @carts.each do |cart| %>
+      <tr>
+        <td><%= cart.id %></td>
+        <td><%= cart.status %></td>
+        <td><%= link_to 'Show', cart %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cart', carts_path, method: :post %>
+<%= link_to 'Products', products_path %>

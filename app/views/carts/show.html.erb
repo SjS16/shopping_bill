@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Products:</strong>
+  <% @items.each do |p| %>
+  <%= p.product.name %>
+  <%= p.product.price %>
+  <%= p.quantity %>
+  <%= p.discount %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @cart.status %>
+</p>
+
+<% if @cart.open? %>
+  <%= render '/bills/form', bill: @bill, cart: @cart, coupons: @coupons %>
+<% else %>
+  <p>
+    <strong>Total:</strong>
+    <%= @bill.total %>
+  </p>
+<% end%>
+<%= link_to 'Back', carts_path %>

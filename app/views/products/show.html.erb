@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<dt>Name</dt>
+<dd><%= @product.name %></dd>
+<dt>Price</dt>
+<dd><%= @product.price %></dd>
+<%= render '/items/form', item: @item, product: @product, carts: @carts %>
+
+<%= link_to 'Back', products_path %>

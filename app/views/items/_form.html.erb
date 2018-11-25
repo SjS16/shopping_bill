@@ -1,0 +1,33 @@
+<%= form_with(model: item, url: items_url, local: true) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if product.item? %>
+    <%= form.label :quantity, "Quantity"%>
+    <%= form.number_field :quantity, step: 1, min: 1 %>
+  <% else %>
+    <%= form.label :quantity, "Weight"%>
+    <%= form.number_field :quantity, step: 0.1, min: 0.1 %> lbs.
+  <% end %>
+
+  <%= form.label :discount, "Discount"%>
+  $ <%= form.number_field :discount, step: 0.01, min: 0, max: product.price  %>
+
+  <%= form.label :cart_id %>
+  <%= form.collection_select :cart_id, @carts, :id, :id %>
+
+  <%= hidden_field(:item, :product_id, :value => product.id) %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

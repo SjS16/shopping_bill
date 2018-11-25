@@ -1,0 +1,22 @@
+<%= form_with(model: bill, url: bills_url, local: true) do |form| %>
+  <% if bill.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(bill.errors.count, "error") %> prohibited this bill from being saved:</h2>
+
+      <ul>
+      <% bill.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.label :coupon_id %>
+  <%= form.collection_select :coupon_id, @coupons, :id, :code, include_blank: true %>
+
+  <%= hidden_field(:bill, :cart_id, :value => cart.id) %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
