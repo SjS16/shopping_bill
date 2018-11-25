@@ -11,8 +11,8 @@ class CartsController < ApplicationController
   end
 
   def create
+    #set cart to open
     @cart = Cart.new(status: 0)
-
     respond_to do |format|
       if @cart.save
         format.html { redirect_to @cart, notice: 'Cart was successfully created.' }

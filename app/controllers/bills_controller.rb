@@ -6,22 +6,17 @@ class BillsController < ApplicationController
   def create
     @cart = Cart.find(bill_params[:cart_id])
 
-    if bill_params[:coupon_id].nil?
+    if bill_params[:coupon_code] == ""
       @total = @cart.calc_total
       @bill = Bill.new(total: @total, cart_id: @cart.id)
+      respond
     else
-      @total = @cart.calc_total - Coupon.find(bill_params[:coupon_id]).discount
-      @bill = Bill.new(total: @total, cart_id: @cart.id, coupon_id: bill_params[:coupon_id])
-    end
-
-    respond_to do |format|
-      if @bill.save
-        @cart.update(status: 1)
-        format.html { redirect_to @cart, notice: 'Bill was successfully created.' }
-        format.json { render :show, status: :created, location: @bill }
+      if valid_coupon?
+        @total = @cart.calc_total - Coupon.find(@coupon_id).discount
+        @bill = Bill.new(total: @total, cart_id: @cart.id, coupon_code: bill_params[:coupon_code])
+        respond
       else
-        format.html { render :new }
-        format.json { render json: @bill.errors, status: :unprocessable_entity }
+        redirect_to @cart, notice: 'Invalid coupon'
       end
     end
   end
@@ -34,6 +29,36 @@ class BillsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bill_params
-      params.require(:bill).permit(:cart_id, :coupon_id)
+      params.require(:bill).permit(:cart_id, :coupon_code)
     end
+
+    def valid_coupon?
+      @cart = Cart.find(bill_params[:cart_id])
+      #check coupon exists
+      if Coupon.where(code: params[:bill][:coupon_code]).exists?
+        @c = Coupon.find_by_code(params[:bill][:coupon_code])
+        #check coupon amount isn't more than bill total
+        if @c.discount < @cart.calc_total
+          @coupon_id = c[1]
+        else
+          return false
+        end
+      else
+        return false
+      end
+    end
+
+    def respond
+      respond_to do |format|
+        if @bill.save
+          #set cart to closed so no more can be added
+          @cart.update(status: 1)
+          format.html { redirect_to @cart, notice: 'Bill was successfully created.' }
+          format.json { render :show, status: :created, location: @bill }
+        else
+          format.html { redirect_to @cart, notice: 'Must have at lesst one product.' }
+        end
+      end
+    end
+
 end

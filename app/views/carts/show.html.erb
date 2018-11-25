@@ -2,12 +2,28 @@
 
 <p>
   <strong>Products:</strong>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Discount</th>
+      <th>Total for Line</th>
+    </tr>
   <% @items.each do |p| %>
-  <%= p.product.name %>
-  <%= p.product.price %>
-  <%= p.quantity %>
-  <%= p.discount %>
+    <tr>
+      <td><%= p.product.name %></td>
+      <td>$<%= p.product.price %></td>
+      <td><%= p.quantity %></td>
+      <% if p.discount.nil? %>
+        <td></td>
+      <% else %>
+        <td>$<%= p.discount %> per item</td>
+      <% end %>
+      <td>$<%= p.discount.nil? ? p.product.price * p.quantity : (p.product.price - p.discount) * p.quantity %></td>
+    </tr>
   <% end %>
+  </table>
 </p>
 
 <p>
@@ -16,11 +32,15 @@
 </p>
 
 <% if @cart.open? %>
-  <%= render '/bills/form', bill: @bill, cart: @cart, coupons: @coupons %>
+  <% if @cart.items.any? %>
+    <%= render '/bills/form', bill: @bill, cart: @cart, coupons: @coupons %>
+  <% else %>
+    <div> Please add items to your cart to check out. </div>
+  <% end%>
 <% else %>
   <p>
     <strong>Total:</strong>
-    <%= @bill.total %>
+    $<%= @bill.total %>
   </p>
 <% end%>
 <%= link_to 'Back', carts_path %>

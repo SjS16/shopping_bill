@@ -10,6 +10,11 @@ Product.delete_all
 Product.create! id: 1, name: "Banana", price: 0.49, pricing_method: 0
 Product.create! id: 2, name: "Milk", price: 3.29, pricing_method: 1
 Product.create! id: 3, name: "Sugar", price: 1.99, pricing_method: 1
+Product.create! id: 4, name: "Apples", price: 0.99, pricing_method: 0
+Product.create! id: 5, name: "Cheese", price: 9.99, pricing_method: 1
+Product.create! id: 6, name: "Cumin", price: 0.55, pricing_method: 0
+Product.create! id: 6, name: "Rice", price: 3.29, pricing_method: 1
+Product.create! id: 6, name: "Peppers", price: 3.49, pricing_method: 0
 
 Coupon.delete_all
 Coupon.create! id: 1, code: "5OFF", discount: 5.00

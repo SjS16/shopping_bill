@@ -11,12 +11,12 @@
     </div>
   <% end %>
 
-  <%= form.label :coupon_id %>
-  <%= form.collection_select :coupon_id, @coupons, :id, :code, include_blank: true %>
+  <%= form.label :coupon_code %>
+  <%= form.text_field :coupon_code %>
 
   <%= hidden_field(:bill, :cart_id, :value => cart.id) %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Pay" %>
   </div>
 <% end %>

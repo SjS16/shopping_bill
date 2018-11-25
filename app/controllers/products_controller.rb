@@ -13,7 +13,6 @@ class ProductsController < ApplicationController
     @item = Item.new
     Cart.create!(status: 0) unless !Cart.where(status: 0).blank?
     @carts = Cart.where(status: 0)
-    p @carts
   end
 
   private

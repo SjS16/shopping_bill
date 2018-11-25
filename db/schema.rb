@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2018_11_25_031000) do
   create_table "bills", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.decimal "total", precision: 10, scale: 2
     t.bigint "coupon_id"
+    t.string "coupon_code"
     t.bigint "cart_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

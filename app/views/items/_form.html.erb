@@ -12,15 +12,15 @@
   <% end %>
 
   <% if product.item? %>
-    <%= form.label :quantity, "Quantity"%>
+    <%= form.label :quantity, "Quantity" %>
     <%= form.number_field :quantity, step: 1, min: 1 %>
   <% else %>
-    <%= form.label :quantity, "Weight"%>
+    <%= form.label :quantity, "Weight" %>
     <%= form.number_field :quantity, step: 0.1, min: 0.1 %> lbs.
   <% end %>
 
-  <%= form.label :discount, "Discount"%>
-  $ <%= form.number_field :discount, step: 0.01, min: 0, max: product.price  %>
+  <%= form.label :discount, "Discount" %>
+  $<%= form.number_field :discount, step: 0.01, min: 0, max: product.price  %> per item
 
   <%= form.label :cart_id %>
   <%= form.collection_select :cart_id, @carts, :id, :id %>
@@ -28,6 +28,6 @@
   <%= hidden_field(:item, :product_id, :value => product.id) %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Add to cart" %>
   </div>
 <% end %>

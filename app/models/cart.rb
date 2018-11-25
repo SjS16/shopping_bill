@@ -4,7 +4,6 @@ class Cart < ApplicationRecord
 
   def calc_total
     items.collect { |item|
-      item.discount
       item.discount.blank? ? (item.quantity * item.product.price) : ((item.product.price - item.discount) * item.quantity)
     }.sum
   end
